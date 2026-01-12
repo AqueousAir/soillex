@@ -1,110 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
     <title>SOILLEX</title>
-    <link rel="icon" href="images/icon.png" type="image/gif" sizes="16x16">
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" >
-    <meta content="CoolAir — Air Conditioner & HVAC Repair Website Template" name="description" >
-    <meta content="" name="keywords" >
-    <meta content="" name="author" >
-    <!-- CSS Files
-    ================================================== -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
-    <link href="css/plugins.css" rel="stylesheet" type="text/css" >
-    <link href="css/swiper.css" rel="stylesheet" type="text/css" >
-    <link href="css/style.css" rel="stylesheet" type="text/css" >
-    <link href="css/coloring.css" rel="stylesheet" type="text/css" >
-    <!-- color scheme -->
-    <link id="colors" href="css/colors/scheme-01.css" rel="stylesheet" type="text/css" >
-    <link rel="icon" type="image/x-icon" href="/images/ICON.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background: url('bg.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero {
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .hero img {
+            max-width: 600px;   /* ⬅️ increased */
+            width: 90%;         /* ⬅️ increased */
+            height: auto;
+            margin-bottom: 22px;
+        }
+
+        .slogan {
+            font-size: 18px;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.85);
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            .hero img {
+                max-width: 420px;
+            }
+
+            .slogan {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div id="wrapper">
-        <div class="float-text show-on-scroll">
-            <span><a href="#">Scroll to top</a></span>
+    <div class="hero">
+        <img src="image.png" alt="SOILLEX Logo">
+        <div class="slogan">
+            Smart Agriculture. Secured Futures.
         </div>
-        <div class="scrollbar-v show-on-scroll"></div>
-        
-        <!-- content begin -->
-        <div class="no-bottom no-top" id="content">
-
-            <div id="top"></div>
-
-            <section class="section-dark text-light no-top no-bottom position-relative overflow-hidden z-1000">
-                <div class="v-center">
-                    <div class="swiper">
-                      <!-- Additional required wrapper -->
-                      <div class="swiper-wrapper">
-                        <!-- Slides -->
-                        
-                        <!-- Slides -->
-
-                        <!-- Slides -->
-                        <div class="swiper-slide">
-                            <div class="swiper-inner" data-bgimage="url(images/slider/bg.jpeg)">
-                                <div class="sw-caption">
-                                    <div class="container">
-                                        <div class="row gx-5 align-items-center">
-
-                                            <div class="spacer-double"></div>
-
-                                            <div class="col-lg-8 offset-lg-2 text-center">     
-                                                <div class="spacer-single"></div>
-                                                <div class="sw-text-wrapper">
-                                                  <img src="images/logo.png">
-                                                    <h3 class="slider-teaser mb-3">SPROUTING NEW POSSIBILITIES</h3>
-                                                    <p>Empowering Agriculture Through Innovation</p>
-                                                    <div class="spacer-10"></div>
-                                                 </div>
-                                            </div>
-
-                                            <div class="spacer-single"></div>
-                                        </div>
-
-                                      
-                                            
-                                            
-                                            
-                                    </div>
-                                </div>
-                                <div class="sw-overlay s2"></div>
-                            </div>
-                        </div>
-                        <!-- Slides -->
-                        
-
-                      </div>
-                      <!-- If we need pagination -->
-                      <div class="swiper-pagination"></div>
-
-                      <!-- If we need navigation buttons -->
-                      <div class="swiper-button-prev"></div>
-                      <div class="swiper-button-next"></div>
-
-                      <!-- If we need scrollbar -->
-                      <div class="swiper-scrollbar"></div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-        <!-- content close -->
     </div>
-
-    
-    <!-- Javascript Files
-    ================================================== -->
-    <script src="js/plugins.js"></script>
-    <script src="js/designesia.js"></script>
-    <script src="js/swiper.js"></script>
-    <script src="js/custom-marquee.js"></script>
-    <script src="js/custom-swiper-1.js"></script>
-
 </body>
-
 </html>
