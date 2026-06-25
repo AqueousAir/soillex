@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SOILLEX builds climate-controlled dome farms for premium, local, year-round strawberry production."
+    />
+    <title>SOILLEX | Intelligent Dome Agriculture</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+    <style>
+      :root {
+        --color-ink: #f7f4ed;
+        --color-muted: rgba(247, 244, 237, 0.74);
+        --color-soft: rgba(247, 244, 237, 0.12);
+        --color-line: rgba(247, 244, 237, 0.18);
+        --color-deep: #030504;
+        --color-green: #83c980;
+        --color-gold: #d6b86b;
+        --header-height: 82px;
+        --section-padding: clamp(22px, 5vw, 76px);
+        --content-width: 740px;
+        --ease: cubic-bezier(0.19, 1, 0.22, 1);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Arial, sans-serif;
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--color-deep);
+      }
+
+      body {
+        margin: 0;
+        background: var(--color-deep);
+        color: var(--color-ink);
+        overflow-x: hidden;
+      }
+
+      body::selection {
+        background: rgba(131, 201, 128, 0.32);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .site-header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--header-height);
+        padding: 18px clamp(18px, 4vw, 58px);
+        background: linear-gradient(180deg, rgba(3, 5, 4, 0.62), rgba(3, 5, 4, 0));
+        transition:
+          background 500ms var(--ease),
+          border-color 500ms var(--ease),
+          backdrop-filter 500ms var(--ease);
+      }
+
+      .site-header.is-scrolled {
+        border-bottom: 1px solid rgba(247, 244, 237, 0.1);
+        background: rgba(3, 5, 4, 0.78);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand-link {
+        display: inline-flex;
+        align-items: center;
+        width: clamp(138px, 16vw, 210px);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, 2.3vw, 34px);
+        color: rgba(247, 244, 237, 0.78);
+        font-size: 13px;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .nav-links a {
+        position: relative;
+        padding: 8px 0;
+        transition: color 260ms ease;
+      }
+
+      .nav-links a::after {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        background: var(--color-green);
+        content: "";
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 320ms var(--ease);
+      }
+
+      .nav-links a:hover {
+        color: var(--color-ink);
+      }
+
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      .hero,
+      .image-section,
+      .cta-section {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        min-height: 100svh;
+        overflow: hidden;
+      }
+
+      .section-bg {
+        position: absolute;
+        inset: -8vh 0;
+        z-index: -3;
+        background-image: var(--bg);
+        background-position: center;
+        background-size: cover;
+        transform: translate3d(0, var(--parallax, 0px), 0) scale(1.04);
+        will-change: transform;
+      }
+
+      .hero::before,
+      .image-section::before {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background:
+          linear-gradient(90deg, rgba(3, 5, 4, 0.78), rgba(3, 5, 4, 0.36) 46%, rgba(3, 5, 4, 0.24)),
+          linear-gradient(180deg, rgba(3, 5, 4, 0.46), rgba(3, 5, 4, 0.14) 42%, rgba(3, 5, 4, 0.82));
+        content: "";
+      }
+
+      .hero::after,
+      .image-section::after {
+        position: absolute;
+        inset: auto 0 0;
+        z-index: -1;
+        height: 44%;
+        background: linear-gradient(180deg, rgba(3, 5, 4, 0), rgba(3, 5, 4, 0.78));
+        content: "";
+      }
+
+      .hero {
+        align-items: center;
+        padding: calc(var(--header-height) + 38px) var(--section-padding) 72px;
+      }
+
+      .image-section {
+        align-items: flex-end;
+        padding: calc(var(--header-height) + 28px) var(--section-padding) clamp(58px, 8vw, 100px);
+      }
+
+      .content {
+        width: min(100%, var(--content-width));
+        transform: translateY(26px);
+        opacity: 0;
+        transition:
+          opacity 900ms var(--ease),
+          transform 900ms var(--ease);
+      }
+
+      .content.is-visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 0 22px;
+        color: rgba(247, 244, 237, 0.78);
+        font-size: 12px;
+        font-weight: 750;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 42px;
+        height: 1px;
+        background: linear-gradient(90deg, var(--color-green), var(--color-gold));
+        content: "";
+      }
+
+      h1,
+      h2 {
+        max-width: 960px;
+        margin: 0;
+        color: #fffdf6;
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 500;
+        letter-spacing: 0;
+        text-shadow: 0 18px 54px rgba(0, 0, 0, 0.48);
+        text-wrap: balance;
+      }
+
+      h1 {
+        font-size: clamp(48px, 8vw, 112px);
+        line-height: 0.92;
+      }
+
+      h2 {
+        font-size: clamp(38px, 5.2vw, 78px);
+        line-height: 0.98;
+      }
+
+      .subtext {
+        max-width: 650px;
+        margin: 24px 0 0;
+        color: rgba(247, 244, 237, 0.84);
+        font-size: clamp(17px, 1.65vw, 23px);
+        font-weight: 430;
+        line-height: 1.55;
+        text-shadow: 0 8px 28px rgba(0, 0, 0, 0.52);
+        text-wrap: pretty;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        margin-top: 34px;
+        padding: 0 26px;
+        border: 1px solid rgba(247, 244, 237, 0.3);
+        border-radius: 999px;
+        background: rgba(247, 244, 237, 0.1);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+        color: #fffdf6;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition:
+          transform 260ms ease,
+          background 260ms ease,
+          border-color 260ms ease;
+      }
+
+      .button:hover {
+        border-color: rgba(131, 201, 128, 0.72);
+        background: rgba(131, 201, 128, 0.18);
+        transform: translateY(-2px);
+      }
+
+      .cta-section {
+        align-items: center;
+        justify-content: center;
+        min-height: 88svh;
+        padding: calc(var(--header-height) + 42px) var(--section-padding) 88px;
+        background:
+          radial-gradient(circle at 18% 22%, rgba(131, 201, 128, 0.16), transparent 32%),
+          radial-gradient(circle at 82% 72%, rgba(214, 184, 107, 0.13), transparent 30%),
+          linear-gradient(135deg, #030504 0%, #07100d 48%, #050706 100%);
+        text-align: center;
+      }
+
+      .cta-section .content {
+        margin: 0 auto;
+      }
+
+      .cta-section .subtext {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .site-footer {
+        display: grid;
+        grid-template-columns: minmax(150px, 220px) 1fr auto;
+        align-items: center;
+        gap: 28px;
+        padding: 34px var(--section-padding);
+        border-top: 1px solid rgba(247, 244, 237, 0.1);
+        background: #030504;
+        color: rgba(247, 244, 237, 0.68);
+      }
+
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-brand img {
+        width: 154px;
+      }
+
+      .footer-brand span {
+        font-size: 13px;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px 28px;
+        font-size: 13px;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .footer-links a {
+        transition: color 260ms ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--color-ink);
+      }
+
+      .copyright {
+        margin: 0;
+        font-size: 13px;
+        text-align: right;
+      }
+
+      @media (max-width: 900px) {
+        :root {
+          --header-height: 74px;
+        }
+
+        .site-header {
+          align-items: center;
+          height: auto;
+          min-height: var(--header-height);
+          padding: 16px 18px;
+        }
+
+        .brand-link {
+          width: 136px;
+        }
+
+        .nav-links {
+          max-width: 58vw;
+          justify-content: flex-end;
+          gap: 8px 15px;
+          font-size: 10px;
+          line-height: 1.2;
+          text-align: right;
+        }
+
+        .hero,
+        .image-section {
+          min-height: 92svh;
+        }
+
+        .hero::before,
+        .image-section::before {
+          background:
+            linear-gradient(90deg, rgba(3, 5, 4, 0.78), rgba(3, 5, 4, 0.4)),
+            linear-gradient(180deg, rgba(3, 5, 4, 0.32), rgba(3, 5, 4, 0.78));
+        }
+
+        .site-footer {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .footer-brand {
+          align-items: center;
+        }
+
+        .copyright {
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 560px) {
+        :root {
+          --header-height: 116px;
+        }
+
+        .site-header {
+          flex-direction: column;
+          justify-content: center;
+          gap: 10px;
+          padding-top: 14px;
+          padding-bottom: 12px;
+        }
+
+        .brand-link {
+          width: 148px;
+        }
+
+        .nav-links {
+          max-width: 100%;
+          justify-content: center;
+          gap: 7px 14px;
+          text-align: center;
+        }
+
+        .hero,
+        .image-section,
+        .cta-section {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+
+        .image-section {
+          align-items: center;
+        }
+
+        .content {
+          width: 100%;
+        }
+
+        .subtext {
+          font-size: 16px;
+        }
+
+        .button {
+          width: 100%;
+          max-width: 320px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+
+        .section-bg {
+          transform: scale(1.02);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand-link" href="#hero" aria-label="SOILLEX home">
+        <img src="assets/img/logo.png" alt="SOILLEX" />
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#vision">Vision</a>
+        <a href="#dome">Dome</a>
+        <a href="#growing-system">Growing System</a>
+        <a href="#market">Market</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="section-bg" style="--bg: url('assets/img/hero.png')"></div>
+        <div class="content reveal is-visible">
+          <p class="eyebrow">SOILLEX Dome Agriculture</p>
+          <h1 id="hero-title">The Future of Strawberry Farming</h1>
+          <p class="subtext">
+            SOILLEX builds climate-controlled dome farms designed for premium,
+            local, year-round strawberry production.
+          </p>
+          <a class="button" href="#vision">Explore SOILLEX</a>
+        </div>
+      </section>
+
+      <section class="image-section" id="vision" aria-labelledby="vision-title">
+        <div class="section-bg" style="--bg: url('assets/img/section1.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Dome Infrastructure</p>
+          <h2 id="vision-title">Agricultural Infrastructure, Reimagined</h2>
+          <p class="subtext">
+            Each SOILLEX dome combines architecture, controlled-environment
+            agriculture, and scalable production capacity inside one intelligent
+            farming structure.
+          </p>
+        </div>
+      </section>
+
+      <section class="image-section" id="dome" aria-labelledby="dome-title">
+        <div class="section-bg" style="--bg: url('assets/img/section2.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Facility Entrance</p>
+          <h2 id="dome-title">From Facility to Food Security</h2>
+          <p class="subtext">
+            A premium growing environment designed to bring clean, reliable
+            strawberry production closer to cities, supermarkets, and
+            communities.
+          </p>
+        </div>
+      </section>
+
+      <section class="image-section" aria-labelledby="inside-title">
+        <div class="section-bg" style="--bg: url('assets/img/section3.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Inside the Dome</p>
+          <h2 id="inside-title">Step Inside the Growing World</h2>
+          <p class="subtext">
+            Organized production zones, clean pathways, controlled lighting, and
+            structured workflows create a professional environment for daily
+            harvesting.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="image-section"
+        id="growing-system"
+        aria-labelledby="vertical-title"
+      >
+        <div class="section-bg" style="--bg: url('assets/img/section4.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Vertical Strawberry Production</p>
+          <h2 id="vertical-title">More Yield From Less Space</h2>
+          <p class="subtext">
+            Multi-level rack systems increase growing density while maintaining
+            clean, soil-free strawberry cultivation inside a controlled climate.
+          </p>
+        </div>
+      </section>
+
+      <section class="image-section" aria-labelledby="smart-title">
+        <div class="section-bg" style="--bg: url('assets/img/section5.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Smart Planting System</p>
+          <h2 id="smart-title">Smart, Soil-Free Cultivation</h2>
+          <p class="subtext">
+            SOILLEX uses hydroponic channels, precision irrigation, sensors, and
+            automation to support consistent plant health and predictable
+            production.
+          </p>
+        </div>
+      </section>
+
+      <section class="image-section" id="market" aria-labelledby="fresh-title">
+        <div class="section-bg" style="--bg: url('assets/img/section6.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Fresh Distribution</p>
+          <h2 id="fresh-title">Harvested Locally. Delivered Fresh.</h2>
+          <p class="subtext">
+            Strawberries move directly from the dome to market, reducing supply
+            distance and supporting fresher, more reliable supermarket delivery.
+          </p>
+        </div>
+      </section>
+
+      <section class="image-section" aria-labelledby="retail-title">
+        <div class="section-bg" style="--bg: url('assets/img/section7.png')"></div>
+        <div class="content reveal">
+          <p class="eyebrow">Retail Experience</p>
+          <h2 id="retail-title">Premium Strawberries Customers Can Trust</h2>
+          <p class="subtext">
+            SOILLEX brings locally grown strawberries to retail shelves with a
+            focus on freshness, quality, sustainability, and brand confidence.
+          </p>
+        </div>
+      </section>
+
+      <section class="cta-section" id="contact" aria-labelledby="contact-title">
+        <div class="content reveal">
+          <p class="eyebrow">Invest in Local Freshness</p>
+          <h2 id="contact-title">Building the Next Generation of Strawberry Farming</h2>
+          <p class="subtext">
+            SOILLEX is designed for scalable dome-based agriculture, predictable
+            production, and premium local supply.
+          </p>
+          <a class="button" href="mailto:info@soillex.com">Contact SOILLEX</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <img src="assets/img/logo.png" alt="SOILLEX" />
+        <span>Smart Grow Systems</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms</a>
+        <a href="investors.html">Investors</a>
+      </nav>
+      <p class="copyright">© 2026 SOILLEX. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const header = document.querySelector("[data-header]");
+      const revealItems = document.querySelectorAll(".reveal");
+      const parallaxItems = document.querySelectorAll(".section-bg");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+            }
+          });
+        },
+        { threshold: 0.28 }
+      );
+
+      revealItems.forEach((item) => revealObserver.observe(item));
+
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const target = document.querySelector(link.getAttribute("href"));
+          if (!target) {
+            return;
+          }
+
+          event.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      function updateScrollEffects() {
+        const scrolled = window.scrollY > 20;
+        header.classList.toggle("is-scrolled", scrolled);
+
+        if (reduceMotion.matches) {
+          return;
+        }
+
+        parallaxItems.forEach((item) => {
+          const rect = item.parentElement.getBoundingClientRect();
+          const movement = rect.top * -0.055;
+          item.style.setProperty("--parallax", `${movement}px`);
+        });
+      }
+
+      updateScrollEffects();
+      window.addEventListener("scroll", updateScrollEffects, { passive: true });
+      window.addEventListener("resize", updateScrollEffects);
+    </script>
+  </body>
+</html>
